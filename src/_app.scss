@@ -1,0 +1,7 @@
+@import './index';
+.main__body{
+    display:flex;
+    background-color: $dark-secondary;
+    overflow: auto;
+    color: white;
+}

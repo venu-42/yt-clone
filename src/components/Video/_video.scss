@@ -1,0 +1,56 @@
+@import "../../index";
+.video__section{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 1%;
+    // justify-content: center;
+    column-gap: calc((5%)/3);
+    row-gap: 20px;
+    margin-top: 20px;
+    
+}
+.video__container {
+  width: 23.7%;
+//  margin:10px; 
+}
+.video__thumbnail {
+  position: relative;
+
+  // height: 160px;
+  img {
+    width: 100%;
+  }
+  span {
+    position: absolute;
+    right: 1%;
+    bottom: 1%;
+    background-color: $dark-secondary;
+    color: white;
+    border-radius: 2px;
+    margin: 4px;
+  }
+}
+.video__details {
+  margin-top: 10px;
+  column-gap: 10px;
+  display: flex;
+  .video__channelimg img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .video__content {
+      .video__title{
+          font-size: 16px;
+          font-weight: 600;
+          @include line-clamp(2)
+      }
+      &>.channel__name{
+        margin: 0px;
+        line-height: 1;
+      }
+      &>.views__time{
+          margin:0;
+      }
+  }
+}

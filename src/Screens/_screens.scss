@@ -1,0 +1,28 @@
+@import '../index';
+
+.loginScreen__container{
+    background-color: $dark-secondary;
+    position: relative;
+    height: 100vh;;
+    color: black;
+}
+.google__auth-btn{
+    position: absolute;
+    width:30%;
+    min-width: 100px;
+    background-color: white;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    padding: 10px;
+    cursor:pointer;
+    p{
+        font-weight: 600;
+        margin:0;
+        font-size: 20px;
+    }
+}

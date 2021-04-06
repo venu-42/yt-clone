@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900&family=Titillium+Web:wght@200;300;400;600;700;900&display=swap');
+
+// variables
+$dark-primary:#111;
+$dark-secondary:rgb(27, 27, 27);
+
+
+
+*{
+  margin:0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  /* font-family: 'Mulish', sans-serif; */
+  font-family: 'Titillium Web', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+@mixin line-clamp($no){
+  display: -webkit-box;
+  -webkit-line-clamp: $no;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
