@@ -2,6 +2,7 @@
 .main__body{
     display:flex;
     background-color: $dark-secondary;
-    overflow: auto;
+    // overflow:hidden;
     color: white;
+    min-height: 100vh;
 }

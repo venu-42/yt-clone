@@ -1,7 +1,8 @@
 import React from "react";
 import Header from '../components/Header/Header'
 import Sidebar from "../components/SideBar/Sidebar";
-import Video from "../components/Video/Video";
+import Videos from "../components/Video/Video";
+import Category from '../components/Category/Category'
 
 
 const HomeScreen = ({showSidebar,toggleSidebarHandler}) => {
@@ -10,7 +11,10 @@ const HomeScreen = ({showSidebar,toggleSidebarHandler}) => {
       <Header toggleHandler={toggleSidebarHandler} />
       <div className="main__body">
         {showSidebar && <Sidebar toggleHandler={toggleSidebarHandler} />}
-        <Video />
+        <div>
+          <Category />
+          <Videos />
+        </div>
       </div>
     </>
   );

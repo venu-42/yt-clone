@@ -1,43 +1,126 @@
-import React from 'react'
-import './_video.scss'
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react";
+import "./_video.scss";
+import moment from "moment";
+import numeral from "numeral";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {
+  getCategoryVideos,
+  getHomeVideos,
+} from "../../redux/actions/videoActions";
+import axios from "../../axios";
 
-const Video = () => {
-    const videos=['video1','video2','video3','','video3','','video3','','video3','']
-    return (
-        <div className='video__section'>
-            {
-                videos.map((video,id)=>{
-                    return (
-                        <VideoContainer key={id} />
-                    )
-                })
-            }
+import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteCustomScroll from "../InfiniteScroll/InfiniteScroll";
+
+const Videos = () => {
+  const dispatch = useDispatch();
+  const category = useSelector((state) => state.homeVideos.category);
+  const videos = useSelector((state) => state.homeVideos.videos);
+  useEffect(() => {
+    dispatch(getHomeVideos());
+    // setTimeout(() => dispatch(getCategoryVideos("buttabomma")), 2000);
+  }, [dispatch]);
+
+  const fetchData = () => {
+    console.log("calling after pagination");
+    setTimeout(() => {
+      if (category === "All") {
+      dispatch(getHomeVideos());
+    } else {
+      dispatch(getCategoryVideos(category));
+    }
+    }, 1000);
+    
+  };
+
+  return (
+    <div className="vdeo__section">
+      <InfiniteCustomScroll length={videos.length} fetchData={fetchData}>
+        {videos?.map((video) => {
+          return <VideoContainer video={video} key={video.id?.videoId||video.id} />;
+        })}
+      </InfiniteCustomScroll>
+    </div>
+  );
+};
+
+export default Videos;
+
+const VideoContainer = ({ video }) => {
+  const {
+    id,
+    snippet: {
+      publishedAt,
+      channelTitle,
+      channelId,
+      title,
+      description,
+      thumbnails: { medium },
+    },
+  } = video;
+  const [channelImg, setChannelImg] = useState("");
+  const [duration, setDuration] = useState(null);
+  const [views, setViews] = useState(null);
+  const seconds = moment.duration(duration).asSeconds();
+  const _duration = moment.utc(seconds * 1000).format("mm:ss");
+  const getChannelIcon = () => {
+    axios
+      .get("/channels", {
+        params: {
+          part: "snippet",
+          id: channelId,
+        },
+      })
+      .then((res) => {
+        // console.log(res);
+        const {
+          data: { items },
+        } = res;
+        setChannelImg(items[0].snippet.thumbnails.default.url);
+      })
+      .catch((err) => console.log(err.message));
+  };
+  const getvideoDetails = () => {
+    axios
+      .get("/videos", {
+        params: {
+          part: "contentDetails,statistics",
+          id: id?.videoId || id,
+        },
+      })
+      .then((res) => {
+        // console.log("content+stats", res);
+        const {
+          data: { items },
+        } = res;
+        setViews(items[0].statistics.viewCount);
+        setDuration(items[0].contentDetails.duration);
+      });
+  };
+  useEffect(getChannelIcon);
+  useEffect(getvideoDetails);
+
+  return (
+    <div className="video__container">
+      <div className="video__thumbnail">
+        <img src={medium.url} alt="thumbnail" />
+        <span className="video__duration">{_duration}</span>
+      </div>
+      <div className="video__details">
+        <div className="video__channelimg">
+          <img src={channelImg} alt="channelimg" />
         </div>
-    )
-}
-
-export default Video
-
-
-
-const VideoContainer = ({title}) => {
-    return (
-        <div className='video__container'>
-            <div  className='video__thumbnail'>
-                <img src='https://i.ytimg.com/vi/KdtMZYO73-k/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDVQH0D4tR257aK7YOhkHWB3J6GvA' alt='thumbnail' />
-                <span className="video__duration">{'6:32'}</span>
-            </div>
-            <div className="video__details">
-                <div className="video__channelimg">
-                    <img src="https://yt3.ggpht.com/ytc/AAUvwnjs39FzjzREzTGZS6kP0YEWRHsNVnAjQ2tYRoGung=s68-c-k-c0x00ffffff-no-rj" alt="channelimg"/>
-                </div>
-                <div className="video__content">
-                    <h5 className='video__title'>{'Prelude of Pushparaj | Allu Arjun | Pushpa | Rashmika | Faasil | DSP | Sukumar | Mythri Movie Makers'}</h5>
-                    <p className="channel__name">{'channel'}</p>
-                    <p className="views__time">{'10K'} views . {'1 hour'} ago</p>
-                </div>
-            </div>
-            
+        <div className="video__content">
+          <h5 className="video__title">{title}</h5>
+          <p className="channel__name">{channelTitle}</p>
+          <p className="views__time">
+            {numeral(views).format("0.a")} views &nbsp;|&nbsp;{" "}
+            {moment(publishedAt).fromNow()}
+          </p>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};

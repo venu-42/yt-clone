@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import './_screens.scss'
 import { useDispatch, useSelector } from 'react-redux';

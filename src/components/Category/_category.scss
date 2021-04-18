@@ -1,0 +1,28 @@
+.category__slider{
+    display: flex;
+    margin-left:10px;
+    padding-bottom: 7px;
+    overflow: auto;
+    white-space: nowrap;
+    max-width: 90vw;
+}
+.category__slider::-webkit-scrollbar{
+    height: 4px;
+}
+.category__slider::-webkit-scrollbar-track{
+    background-color: rgb(71, 71, 71);
+}
+.category__slider::-webkit-scrollbar-thumb{
+    background: rgb(145, 145, 145);
+    border-radius: 5px;
+}
+.tag{
+    display: inline-block;
+    height: 40px;
+    margin:.2rem;
+    padding:.3rem .7rem;
+    border: 1px solid rgba(255, 255, 255, 0.329);
+    border-radius:10px;
+    // white-space: nowrap;
+    cursor:pointer;
+}

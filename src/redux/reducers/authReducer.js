@@ -4,7 +4,7 @@ const initailState = {
 }
 
 const authReducer=(state=initailState,action)=>{
-    console.log(state)
+    // console.log(state,"action:"+action.type)
     const {type,payload} = action;
     switch(type){
         case LOGIN:

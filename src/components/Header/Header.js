@@ -5,10 +5,11 @@ import {IoNotificationsSharp} from 'react-icons/io5'
 import {MdApps,BsSearch,FaVideo,GiHamburgerMenu} from 'react-icons/all';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions/authActions';
+import { useHistory } from 'react-router';
 
 const Header = ({toggleHandler}) => {
     const dispatch = useDispatch();
-    
+    const history = useHistory();
     const logoutHandler = ()=>{
         dispatch(logout());
     }
@@ -16,7 +17,7 @@ const Header = ({toggleHandler}) => {
     return (
         <nav className="navbar navbar-expand">
             <div className='mr-3 text-large' style={{cursor:'pointer'}} onClick={toggleHandler} ><GiHamburgerMenu/></div>
-            <a className="navbar-brand" href="/">
+            <a className="navbar-brand" onClick={()=>{history.push('/')}}>
                 <img src="https://www.iconpacks.net/icons/2/free-youtube-logo-icon-2431-thumb.png" alt='home' width='30px' />
                 <p className='home__btn'>YOUTUBE</p>
             </a>
@@ -38,7 +39,7 @@ const Header = ({toggleHandler}) => {
                     <a className="nav-link" href="#"><MdApps /></a>
                 </li>
                 <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <img src="https://lh3.googleusercontent.com/ogw/ADGmqu8lCkKRc9CXtoT02KLdxBKuWguOeGQvbp2nrHanMRo=s32-c-mo" alt="dp"/>
                     </a>
                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

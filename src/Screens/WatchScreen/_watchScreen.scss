@@ -1,0 +1,107 @@
+@import '../../index';
+
+.watch__container{
+    color: white;
+    display: flex;
+    margin:20px;
+    gap:20px;
+    padding: 10px 40px;
+    justify-content: space-between;
+    .big__video{
+        width: 70%;
+        .title{
+            font-size: 27px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .stats{
+            color:rgb(138, 138, 138);
+            display: flex;
+            justify-content: space-between;
+
+            .left__part{
+                margin-bottom: 0;
+            }
+            svg{
+                font-size: 26px;
+                vertical-align: text-bottom;
+            }
+        }
+        .channel__details{
+            display:flex;
+            
+            p{
+                margin:10px 40px 10px 10px;
+                @include line-clamp(2);
+
+            }
+            .subCount{
+                margin-left:auto;
+            }
+            .subscription{
+                border:0;
+                outline:0;
+                padding:10px;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+            .not__subscribed{
+                color:white;
+                background-color: rgb(250, 78, 78);
+            }
+            .subscribed{
+                color:rgb(207, 207, 207);
+                background-color: rgba(155, 155, 155, 0.5);
+            }
+        }
+        .desc__heading{
+            font-weight: 700;;
+        }
+        .video__description{
+            white-space: pre-line;
+            font-weight: 300
+        }
+        .line-clamp__description{
+            @include line-clamp(5);
+        }
+        .comment__description{
+            // @include line-clamp(1);
+            color:rgb(226, 226, 226);
+        }
+        .comment__box{
+            display: flex;
+            gap:15px;
+            // align-items: center;
+            margin:20px 0;
+            .comment__title{
+                margin-bottom: 0;
+                p{
+                    margin-bottom: 6px;
+                }
+            }
+        }
+    }
+    .infinite-scroll-component{
+        display: block;
+    }
+    .related__videos{
+        
+    }
+}
+
+.channel__img{
+    width:40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.color-gray{
+    color:gray;
+}
+.cursor-pointer{
+    cursor:pointer;
+}
+.small__gray{
+    color:gray;
+    font-size: 16px;
+}

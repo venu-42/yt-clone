@@ -17,6 +17,7 @@ body {
   font-family: 'Titillium Web', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: $dark-primary;
 }
 
 
@@ -25,4 +26,9 @@ body {
   -webkit-line-clamp: $no;
   -webkit-box-orient: vertical;  
   overflow: hidden;
+}
+
+hr{
+  border-color:rgba(255, 255, 255, 0.24);
+  height: 5px;
 }

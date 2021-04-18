@@ -29,6 +29,6 @@ export const logout=()=>dispatch=>{
         dispatch({
             type:actionTypes.LOGOUT
         })
-        localStorage.setItem('ytc-user',null);
+        localStorage.removeItem('ytc-user');
     })
 }
