@@ -3,12 +3,13 @@ import Header from "../../components/Header/Header";
 import "./_watchScreen.scss";
 import { BiLike, BiDislike, RiShareForwardLine } from "react-icons/all";
 import axios from "../../axios";
-import { getChannelDetails, getVideoComments, getWatchVideo } from "../../redux/actions/watchActions";
+import { getChannelDetails, getRelVideos, getVideoComments, getWatchVideo } from "../../redux/actions/watchActions";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import numeral from "numeral";
 import { isSubscribedFn, Subscribe } from "../../UtilFunctions";
 import InfiniteCustomScroll from "../../components/InfiniteScroll/InfiniteScroll";
+import { useHistory } from "react-router";
 
 const WatchScreen = ({ match }) => {
   const {
@@ -17,14 +18,15 @@ const WatchScreen = ({ match }) => {
   const [showDesc, setShowDesc] = useState(false);
   const dispatch = useDispatch();
 
-  const relatedvideos = ["", "", "", "", "", ""];
 
 
   // ---selectors--
   const present_video = useSelector((state) => state.watch.present_video);
   const channelDetails = useSelector(state=>state.watch.channelDetails);
   const videoComments = useSelector(state=>state.watch.videoComments.body);
-  
+  const videoCommentsObj = useSelector(state=>state.watch.videoComments);
+  const rel_videos = useSelector(state=>state.watch.rel_videos.body)
+  const rel_videosObj = useSelector(state=>state.watch.rel_videos)
 
 
   console.log(present_video);
@@ -61,6 +63,16 @@ const WatchScreen = ({ match }) => {
     }
   }, [channelId,dispatch]);
 
+  useEffect(()=>{
+    console.log('fetching rel_viedos');
+    dispatch(getRelVideos(videoId));
+  },[videoId,dispatch])
+
+  useEffect(()=>{
+    dispatch(getVideoComments(videoId));
+  },[videoId,dispatch])
+
+
   // useEffect(()=>{
   //   dispatch(getVideoComments(videoId));
   // },[dispatch,videoId])
@@ -78,13 +90,20 @@ const WatchScreen = ({ match }) => {
     }
   };
 
-  const fetchComments = (videoId)=>{
+  let fetchingDelay=1000
+  const fetchComments = ()=>{
+    console.log('in fetch comments')
     setTimeout(()=>{
       dispatch(getVideoComments(videoId));
-    },1500)
+    },fetchingDelay)
     
   }
-
+  const fetchRelVideos= ()=>{
+    console.log('fetching rel videos')
+    setTimeout(()=>{
+      dispatch(getRelVideos(videoId));
+    },fetchingDelay)
+  }
   return (
     <>
       <Header />
@@ -150,7 +169,8 @@ const WatchScreen = ({ match }) => {
           <hr />
           <div className="comments">
             <h5>Comments &nbsp; {commentCount}</h5>
-            <InfiniteCustomScroll length={videoComments?videoComments.length:0} fetchData={()=>fetchComments(videoId)}>
+            {videoComments?.length&&
+            <InfiniteCustomScroll length={videoComments?.length} fetchData={()=>{fetchComments()}} loading={videoCommentsObj.loading} hasMore={videoCommentsObj.nextPageToken?true:false} for1="comments" >
               {
                 videoComments?.map(comment=>{
                   return (
@@ -158,22 +178,65 @@ const WatchScreen = ({ match }) => {
                 })
               }
             </InfiniteCustomScroll>
+            }
           </div>
         </div>
         <div className="related__videos">
-          {relatedvideos.map((video) => {
-            return <RelatedVideo />;
-          })}
+          {rel_videos?.length&&
+          <InfiniteCustomScroll  length={rel_videos?.length} fetchData={()=>fetchRelVideos()} hasMore={rel_videosObj.nextPageToken?true:false} >
+            {rel_videos?.map((video,id) => {
+              // console.log(video)
+              return <RelatedVideo {...video} id1={id} />;
+            })}
+          </InfiniteCustomScroll>
+          }
         </div>
       </div>
     </>
   );
 };
 
-export default WatchScreen;
+export default WatchScreen; 
 
-const RelatedVideo = ({ video }) => {
-  return <h1>rel.video</h1>;
+const RelatedVideo = (props) => {
+  // console.log(props)
+  let { id:{videoId},id1 }=props;
+  const [snippet,setSnippet] = useState({});
+  let {publishedAt,title,thumbnails,channelTitle}=snippet;
+  const history = useHistory();
+  useEffect(()=>{
+    const getVideoSnippet = async ()=>{
+      try{
+        const res= await axios.get('/videos',{
+          params:{
+            id:videoId,
+            part:'snippet,contentDetails,statistics'
+          }
+        })
+        // console.log('get single rel_video',res);
+        // console.log(res);
+        setSnippet(res.data.items[0].snippet)
+      }
+      catch(err){
+        // console.log('get single rel_video ERROR',err);
+      }
+    }
+    getVideoSnippet();
+  },[videoId])
+
+  if(publishedAt)
+  return (
+    <div className='related__video cursor-pointer' onClick={()=>history.push(`/watch/${videoId}`)} >
+      <img src={thumbnails.medium.url} alt="rel_video"/>
+      <div>
+        <h6 className='line__clamp2'>{title}</h6>
+        <p className="color-gray cursor-pointer"> {channelTitle}</p>
+        <p className="color-gray">{moment(publishedAt).fromNow()}</p>
+      </div>
+    </div>
+  );
+
+  return <></>
 };
 
 const VideoComment = ({imgURL,title,publishedAt,description})=>{

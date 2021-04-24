@@ -5,7 +5,7 @@
     display: flex;
     margin:20px;
     gap:20px;
-    padding: 10px 40px;
+    padding: 10px 0px 10px 40px;
     justify-content: space-between;
     .big__video{
         width: 70%;
@@ -85,7 +85,26 @@
         display: block;
     }
     .related__videos{
-        
+        display: flex;
+        flex-direction: column;
+        gap:20px;
+        width:30%;
+    }
+    .related__video{
+        display: flex;
+        gap: 10px;
+        margin:10px 0;
+        padding: 3px;
+        img{
+            width:150px;
+            object-fit:contain
+        }
+        div{
+            p{
+                margin:0;
+                font-size: 14px;
+            }
+        }
     }
 }
 
@@ -93,6 +112,10 @@
     width:40px;
     height: 40px;
     border-radius: 50%;
+}
+
+.line__clamp2{
+    @include line-clamp(2);
 }
 
 .color-gray{

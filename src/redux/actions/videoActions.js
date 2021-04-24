@@ -45,7 +45,7 @@ export const getCategoryVideos = (keyword) => (dispatch, getState) => {
       params: {
         part: "snippet",
         type: "video",
-        maxResults: 5,
+        maxResults: 50,
         q: keyword,
         pageToken: getState().homeVideos.category===keyword?getState().homeVideos.nextPageToken:'',
       },

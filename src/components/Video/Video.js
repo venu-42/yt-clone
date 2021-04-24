@@ -13,6 +13,7 @@ import axios from "../../axios";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 import InfiniteCustomScroll from "../InfiniteScroll/InfiniteScroll";
+import { useHistory } from "react-router";
 
 const Videos = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,8 @@ const Videos = () => {
 
 export default Videos;
 
-const VideoContainer = ({ video }) => {
+export const VideoContainer = ({ video }) => {
+  const history=useHistory();
   const {
     id,
     snippet: {
@@ -103,8 +105,8 @@ const VideoContainer = ({ video }) => {
   useEffect(getvideoDetails);
 
   return (
-    <div className="video__container">
-      <div className="video__thumbnail">
+    <div className="video__container" >
+      <div className="video__thumbnail cursor-pointer" onClick={()=>history.push(`/watch/${id?.videoId || id}`)}>
         <img src={medium.url} alt="thumbnail" />
         <span className="video__duration">{_duration}</span>
       </div>
@@ -113,7 +115,7 @@ const VideoContainer = ({ video }) => {
           <img src={channelImg} alt="channelimg" />
         </div>
         <div className="video__content">
-          <h5 className="video__title">{title}</h5>
+          <h5 className="video__title cursor-pointer" onClick={()=>history.push(`/watch/${id?.videoId || id}`)}>{title}</h5>
           <p className="channel__name">{channelTitle}</p>
           <p className="views__time">
             {numeral(views).format("0.a")} views &nbsp;|&nbsp;{" "}

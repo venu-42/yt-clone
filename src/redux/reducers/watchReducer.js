@@ -1,4 +1,4 @@
-import { WATCH_CHANNEL_FAIL, WATCH_CHANNEL_LOADING, WATCH_CHANNEL_SUCCESS, WATCH_COMMENTS_FAIL, WATCH_COMMENTS_LOADING, WATCH_COMMENTS_SUCCESS, WATCH_VIDEO_FAIL, WATCH_VIDEO_LOADING, WATCH_VIDEO_SUCCESS } from "../actionTypes";
+import { WATCH_CHANNEL_FAIL, WATCH_CHANNEL_LOADING, WATCH_CHANNEL_SUCCESS, WATCH_COMMENTS_FAIL, WATCH_COMMENTS_LOADING, WATCH_COMMENTS_SUCCESS, WATCH_REL_VIDEO_FAIL, WATCH_REL_VIDEO_LOADING, WATCH_REL_VIDEO_SUCCESS, WATCH_VIDEO_FAIL, WATCH_VIDEO_LOADING, WATCH_VIDEO_SUCCESS } from "../actionTypes";
 
 const initialState={
     present_video:{
@@ -81,8 +81,10 @@ export const watchReducer=(state=initialState,action)=>{
                 ...state,
                 videoComments:{
                     ...state.videoComments,
-                    body:payload,
-                    loading:false
+                    body:payload.items,
+                    nextPageToken:payload.nextPageToken,
+                    loading:false,
+                    videoId:payload.videoId
                 }
             }
         case WATCH_COMMENTS_FAIL:
@@ -95,11 +97,42 @@ export const watchReducer=(state=initialState,action)=>{
                 }
             }
         case WATCH_COMMENTS_LOADING:
+            let body=payload?null:state.videoComments.body
             return {
                 ...state,
                 videoComments:{
                     ...state.videoComments,
-                    loading:true
+                    loading:true,
+                    body:body
+                }
+            }
+        case WATCH_REL_VIDEO_LOADING:
+            let videosBody=payload?null:state.rel_videos.body
+            return{
+                ...state,
+                rel_videos:{
+                    ...state.rel_videos,
+                    loading:true,
+                    body:videosBody
+                }
+            }
+        case WATCH_REL_VIDEO_SUCCESS:
+            return {
+                ...state,
+                rel_videos:{
+                    ...state.rel_videos,
+                    loading:false,
+                    body:payload.items,
+                    nextPageToken:payload.nextPageToken
+                }
+            }
+        case WATCH_REL_VIDEO_FAIL:
+            return{
+                ...state,
+                rel_videos:{
+                    ...state.rel_videos,
+                    loading:false,
+                    error:payload
                 }
             }
         default:

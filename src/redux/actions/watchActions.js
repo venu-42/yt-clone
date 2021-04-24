@@ -1,5 +1,5 @@
 import axios from "../../axios";
-import { WATCH_REL_VIDEO_LOADING,WATCH_CHANNEL_SUCCESS,WATCH_CHANNEL_LOADING,WATCH_COMMENTS_SUCCESS,WATCH_COMMENTS_LOADING,WATCH_CHANNEL_FAIL, WATCH_REL_VIDEO_SUCCESS, WATCH_VIDEO_FAIL, WATCH_VIDEO_LOADING, WATCH_VIDEO_SUCCESS, WATCH_MORE_COMMENTS_SUCCESS, WATCH_MORE_COMMENTS_LOADING } from "../actionTypes"
+import { WATCH_REL_VIDEO_LOADING,WATCH_CHANNEL_SUCCESS,WATCH_CHANNEL_LOADING,WATCH_COMMENTS_SUCCESS,WATCH_COMMENTS_LOADING,WATCH_CHANNEL_FAIL, WATCH_VIDEO_FAIL, WATCH_VIDEO_LOADING, WATCH_VIDEO_SUCCESS, WATCH_MORE_COMMENTS_SUCCESS, WATCH_MORE_COMMENTS_LOADING, WATCH_REL_VIDEO_FAIL, WATCH_REL_VIDEO_SUCCESS } from "../actionTypes"
 import { logout } from "./authActions";
 
 
@@ -61,25 +61,37 @@ export const getChannelDetails= (channelId)=>dispatch=>{
 }
 
 export const getVideoComments = (videoId)=>(dispatch,getState)=>{
+    let clearLoading=false
+    if(getState().watch.videoComments?.videoId!==videoId){
+        clearLoading=true
+    }
     dispatch({
-        type:WATCH_COMMENTS_LOADING
+        type:WATCH_COMMENTS_LOADING,
+        payload:clearLoading
     })
     axios.get('/commentThreads',{
         params:{
             part:'id,snippet,replies',
             videoId,
-            pageToken:getState().watch.videoComments.body?.nextPageToken
+            pageToken:getState().watch.videoComments.nextPageToken
         }
     })
     .then(res=>{
-        console.log(res);
+        console.log('Comments received !!',res);
         let items = res.data.items;
+        console.log('checking diff. comments',getState().watch.videoComments?.videoId,videoId)
+        
         if(getState().watch.videoComments?.body?.length){
             items=[...getState().watch.videoComments?.body,...items]
+            console.log(items.length)
         }
         dispatch({
             type:WATCH_COMMENTS_SUCCESS,
-            payload:items
+            payload:{
+                items,
+                nextPageToken:res.data.nextPageToken,
+                videoId
+            }
         })
     })
     .catch(err=>{
@@ -92,9 +104,15 @@ export const getVideoComments = (videoId)=>(dispatch,getState)=>{
 }
 
 
-export const getRelVideos= (videoId)=>dispatch=>{
+export const getRelVideos= (videoId)=>(dispatch,getState)=>{
+    console.log('in getRelVIdeos action')
+    let clearLoading=false
+    if(getState().watch.videoComments?.videoId!==videoId){
+        clearLoading=true
+    }
     dispatch({
-        type:WATCH_REL_VIDEO_LOADING
+        type:WATCH_REL_VIDEO_LOADING,
+        payload:clearLoading
     });
 
     axios
@@ -102,10 +120,33 @@ export const getRelVideos= (videoId)=>dispatch=>{
         params:{
             part:'snippet',
             relatedToVideoId:videoId,
-            pageToken:''
+            pageToken:getState().watch.rel_videos.nextPageToken,
+            type:'video',
+            maxResults:100
         }
     })
     .then((res)=>{
-        console.log(res);
+        console.log('getrelvideos',res);
+        let items=getState().watch.rel_videos.body;
+        if(items?.length){
+            items = [...items,...res.data.items]
+        }
+        else{
+            items=res.data.items;
+        }
+        dispatch({
+            type:WATCH_REL_VIDEO_SUCCESS,
+            payload:{
+                items,
+                nextPageToken:res.data.nextPageToken
+            }
+        })
+    })
+    .catch((err)=>{
+        console.log(err);
+        dispatch({
+            type:WATCH_REL_VIDEO_FAIL,
+            payload:err.response
+        })
     })
 }

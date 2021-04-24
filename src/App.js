@@ -9,6 +9,7 @@ import HomeScreen from "./Screens/HomeScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import "./_app.scss";
 import WatchScreen from './Screens/WatchScreen/WatchScreen'
+import LikedVideos from "./Screens/LikedVideos";
 
 const App = () => {
   const [showSidebar, setShowSideBar] = useState(false);
@@ -34,6 +35,7 @@ const App = () => {
           />
         </Route>
         <Route path="/watch/:videoId" component={WatchScreen} />
+        <Route path="/likedVideos" component={LikedVideos} />
       </Switch>
     </BrowserRouter>
   );
