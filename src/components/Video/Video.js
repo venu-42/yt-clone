@@ -112,11 +112,12 @@ export const VideoContainer = ({ video }) => {
       </div>
       <div className="video__details">
         <div className="video__channelimg">
-          <img src={channelImg} alt="channelimg" />
+          <img className='channel__img' src={channelImg} alt="channelimg" 
+              onClick={()=>window.open(`/channel/${channelId}`)}/>
         </div>
         <div className="video__content">
           <h5 className="video__title cursor-pointer" onClick={()=>history.push(`/watch/${id?.videoId || id}`)}>{title}</h5>
-          <p className="channel__name">{channelTitle}</p>
+          <a href={`/watch/${id?.videoId || id}`} className="channel__name">{channelTitle}</a>
           <p className="views__time">
             {numeral(views).format("0.a")} views &nbsp;|&nbsp;{" "}
             {moment(publishedAt).fromNow()}

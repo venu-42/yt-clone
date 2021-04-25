@@ -137,8 +137,9 @@ const WatchScreen = ({ match }) => {
               src={`${channelDetails?.body?.snippet.thumbnails.default.url}`}
               alt=""
               className="channel__img"
-            />
-            <p>{channelTitle}</p>
+              onClick={()=>window.open(`/channel/${channelId}`)}
+            />&nbsp;
+            <a href={`/channel/${channelId}`} className='channel__name'>{channelTitle}</a>
             <p className='subCount'>{numeral(channelDetails?.body?.statistics.subscriberCount).format(0,0)}</p>
             <button
               className={`subscription ${
@@ -174,7 +175,7 @@ const WatchScreen = ({ match }) => {
               {
                 videoComments?.map(comment=>{
                   return (
-                  <VideoComment publishedAt={comment.snippet.topLevelComment.snippet.publishedAt} authorChannelURL={comment.snippet.topLevelComment.snippet.authorChannelUrl} title={comment.snippet.topLevelComment.snippet.authorDisplayName} description={comment.snippet.topLevelComment.snippet.textDisplay} imgURL={comment.snippet.topLevelComment.snippet.authorProfileImageUrl} />)
+                  <VideoComment publishedAt={comment.snippet.topLevelComment.snippet.publishedAt} authorChannelURL={comment.snippet.topLevelComment.snippet.authorChannelUrl} title={comment.snippet.topLevelComment.snippet.authorDisplayName} description={comment.snippet.topLevelComment.snippet.textDisplay} imgURL={comment.snippet.topLevelComment.snippet.authorProfileImageUrl} channelId={comment.snippet.topLevelComment.snippet.authorChannelId.value} />)
                 })
               }
             </InfiniteCustomScroll>
@@ -239,12 +240,12 @@ const RelatedVideo = (props) => {
   return <></>
 };
 
-const VideoComment = ({imgURL,title,publishedAt,description})=>{
+const VideoComment = ({imgURL,title,publishedAt,description,channelId})=>{
   return(
     <div className="comment__box">
       <img src={imgURL} className='channel__img' alt=""/>
       <div className="title__desc">
-        <h6 className='comment__title'><b>{title}</b> &nbsp; <p className="small__gray d-inline-block">{moment(publishedAt).fromNow()}</p> </h6>
+        <h6 className='comment__title'><a href={`/channel/${channelId}`} className="channel__name">{title}</a> &nbsp; <p className="small__gray d-inline-block">{moment(publishedAt).fromNow()}</p> </h6>
         <p className='comment__description' dangerouslySetInnerHTML={{__html: description}} ></p>
       </div>
     </div>

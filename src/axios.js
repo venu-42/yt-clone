@@ -8,7 +8,7 @@ const netflixClone='AIzaSyAmsAmcTlwv0LuAQPlUi2Or-TdpbT6fN_k'
 const instance = axios.create({
     baseURL:'https://youtube.googleapis.com/youtube/v3/',
     params:{
-        key:netflixClone
+        key:ytClone
     }
 })
 

@@ -34,11 +34,6 @@
   margin-top: 10px;
   column-gap: 10px;
   display: flex;
-  .video__channelimg img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
   .video__content {
       width:100%;
       .video__title{
@@ -46,11 +41,6 @@
           font-weight: 400;
           @include line-clamp(2);
           word-wrap: break-word;
-      }
-      &>.channel__name{
-        font-weight: 600;
-        margin: 0px;
-        line-height: 1;
       }
       &>.views__time{
           margin:0;
@@ -71,4 +61,14 @@
   // height: 80vh;
   height: unset !important;
   overflow: unset !important;
+}
+
+.channel__name{
+  font-weight: 600;
+  margin: 0px;
+  line-height: 1;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  width: fit-content;
+  color:inherit !important;
 }

@@ -122,13 +122,17 @@ export const getRelVideos= (videoId)=>(dispatch,getState)=>{
             relatedToVideoId:videoId,
             pageToken:getState().watch.rel_videos.nextPageToken,
             type:'video',
-            maxResults:100
+            maxResults:10
         }
     })
     .then((res)=>{
         console.log('getrelvideos',res);
         let items=getState().watch.rel_videos.body;
+        let pageToken=res.data.nextPageToken;
         if(items?.length){
+            if(res.data.items.length==0){
+                pageToken=null;
+            }
             items = [...items,...res.data.items]
         }
         else{
@@ -138,7 +142,7 @@ export const getRelVideos= (videoId)=>(dispatch,getState)=>{
             type:WATCH_REL_VIDEO_SUCCESS,
             payload:{
                 items,
-                nextPageToken:res.data.nextPageToken
+                nextPageToken:pageToken
             }
         })
     })

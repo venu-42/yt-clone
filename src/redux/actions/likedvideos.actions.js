@@ -8,17 +8,17 @@ export const getLikedvieos = () => async (dispatch,getState) => {
   try {
     const res = await axios.get("/videos", {
       params: {
-        chart:'mostPopular',
-        // myRating: "like",
-        maxResults: 50,
+        // chart:'mostPopular',
+        myRating: "like",
+        maxResults: 5,
         nextPageToken:getState().likedVideos.nextPageToken,
         part:'snippet'
       },
-    //   headers: {
-    //     Authorization: `Bearer ${
-    //       JSON.parse(localStorage.getItem("ytc-user"))?.accessToken
-    //     }`,
-    //   },
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("ytc-user"))?.accessToken
+        }`,
+      },
     });
     console.log(res);
     let items=res.data.items;
