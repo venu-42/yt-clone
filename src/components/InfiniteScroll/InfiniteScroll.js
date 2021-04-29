@@ -12,6 +12,7 @@ const InfiniteCustomScroll = ({children,length,fetchData,loading,hasMore,for1}) 
         next={fetchData}
         // hasMore={hasMore?hasMore:true}
         hasMore={(hasMore??true)||hasMore}
+        // hasMore={false}
         loader={
           // <div className="spinner-border" role="status">
           //   <span className="sr-only">Loading...</span>
@@ -30,6 +31,7 @@ const InfiniteCustomScroll = ({children,length,fetchData,loading,hasMore,for1}) 
       >
           {children}
       </InfiniteScroll>
+      {/* {children} */}
     </>
   );
 };

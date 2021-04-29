@@ -8,14 +8,15 @@
     margin-left: 2px;
 }
 
-.navbar{
-    background-color: black;
-}
 .dropdown-toggle::after{
     content:none
 }
+.btm-line{
+    border-bottom: 1px solid black;
+}
 
 .navbar{
+    height: 80px;
     background-color: $dark-secondary;
     & *{
         color:white;
@@ -30,6 +31,7 @@
         width:20vw;
         &:focus{
             background-color: $dark-secondary;
+            color: white;
         }
     }
 

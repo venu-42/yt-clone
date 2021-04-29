@@ -1,10 +1,8 @@
 .category__slider{
-    display: flex;
     margin-left:10px;
     padding-bottom: 7px;
     overflow: auto;
     white-space: nowrap;
-    max-width: 90vw;
 }
 .category__slider::-webkit-scrollbar{
     height: 4px;
@@ -18,11 +16,13 @@
 }
 .tag{
     display: inline-block;
-    height: 40px;
-    margin:.2rem;
-    padding:.3rem .7rem;
+    height: 34px;
+    margin: .2rem;
+    padding: 4px 0.7rem;
     border: 1px solid rgba(255, 255, 255, 0.329);
-    border-radius:10px;
-    // white-space: nowrap;
-    cursor:pointer;
+    /* border-radius: 0px; */
+    cursor: pointer;
+}
+.tag:hover{
+    background-color:#2e2e2e;
 }

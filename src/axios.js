@@ -12,4 +12,16 @@ const instance = axios.create({
     }
 })
 
+const URLandPARAMS = (req)=>(
+    {
+        url:req.url,
+        params:req.params
+    }
+)
+
+instance.interceptors.request.use(request => {
+    console.log('Starting Request', JSON.stringify(URLandPARAMS(request), null, 2))
+    return request
+  })
+
 export default instance;

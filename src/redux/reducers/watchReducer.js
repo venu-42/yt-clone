@@ -1,4 +1,4 @@
-import { WATCH_CHANNEL_FAIL, WATCH_CHANNEL_LOADING, WATCH_CHANNEL_SUCCESS, WATCH_COMMENTS_FAIL, WATCH_COMMENTS_LOADING, WATCH_COMMENTS_SUCCESS, WATCH_REL_VIDEO_FAIL, WATCH_REL_VIDEO_LOADING, WATCH_REL_VIDEO_SUCCESS, WATCH_VIDEO_FAIL, WATCH_VIDEO_LOADING, WATCH_VIDEO_SUCCESS } from "../actionTypes";
+import { ADD_SUBSCRIPTION, WATCH_CHANNEL_FAIL, WATCH_CHANNEL_LOADING, WATCH_CHANNEL_SUCCESS, WATCH_COMMENTS_FAIL, WATCH_COMMENTS_LOADING, WATCH_COMMENTS_SUCCESS, WATCH_REL_VIDEO_FAIL, WATCH_REL_VIDEO_LOADING, WATCH_REL_VIDEO_SUCCESS, WATCH_VIDEO_FAIL, WATCH_VIDEO_LOADING, WATCH_VIDEO_SUCCESS } from "../actionTypes";
 
 const initialState={
     present_video:{
@@ -18,7 +18,8 @@ const initialState={
     },
     videoComments:{
         loading:true
-    }
+    },
+    subscriptionId:null
 }
 
 
@@ -134,6 +135,11 @@ export const watchReducer=(state=initialState,action)=>{
                     loading:false,
                     error:payload
                 }
+            }
+        case ADD_SUBSCRIPTION:
+            return{
+                ...state,
+                subscriptionId:payload
             }
         default:
             return state;

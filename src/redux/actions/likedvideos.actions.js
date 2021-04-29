@@ -10,13 +10,13 @@ export const getLikedvieos = () => async (dispatch,getState) => {
       params: {
         // chart:'mostPopular',
         myRating: "like",
-        maxResults: 5,
+        maxResults: 50,
         nextPageToken:getState().likedVideos.nextPageToken,
         part:'snippet'
       },
       headers: {
         Authorization: `Bearer ${
-          JSON.parse(localStorage.getItem("ytc-user"))?.accessToken
+          getState().auth.user.accessToken
         }`,
       },
     });

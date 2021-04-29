@@ -65,8 +65,9 @@
             @include line-clamp(5);
         }
         .comment__description{
-            // @include line-clamp(1);
+            @include line-clamp(4);
             color:rgb(226, 226, 226);
+            word-break:break-all;
         }
         .comment__box{
             display: flex;

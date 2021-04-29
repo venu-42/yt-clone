@@ -21,7 +21,6 @@ const Videos = () => {
   const videos = useSelector((state) => state.homeVideos.videos);
   useEffect(() => {
     dispatch(getHomeVideos());
-    // setTimeout(() => dispatch(getCategoryVideos("buttabomma")), 2000);
   }, [dispatch]);
 
   const fetchData = () => {
@@ -38,9 +37,9 @@ const Videos = () => {
 
   return (
     <div className="vdeo__section">
-      <InfiniteCustomScroll length={videos.length} fetchData={fetchData}>
+      <InfiniteCustomScroll length={videos.length} fetchData={fetchData} hasMore={videos.length<30}>
         {videos?.map((video) => {
-          return <VideoContainer video={video} key={video.id?.videoId||video.id} />;
+          return <VideoContainer video={video} id={video.id?.videoId||video.id} key={video.id?.videoId||video.id} />;
         })}
       </InfiniteCustomScroll>
     </div>
@@ -49,10 +48,9 @@ const Videos = () => {
 
 export default Videos;
 
-export const VideoContainer = ({ video }) => {
+export const VideoContainer = ({ video,id }) => {
   const history=useHistory();
   const {
-    id,
     snippet: {
       publishedAt,
       channelTitle,
@@ -68,6 +66,7 @@ export const VideoContainer = ({ video }) => {
   const seconds = moment.duration(duration).asSeconds();
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
   const getChannelIcon = () => {
+    console.log('axios called getchannelicon')
     axios
       .get("/channels", {
         params: {
@@ -85,11 +84,12 @@ export const VideoContainer = ({ video }) => {
       .catch((err) => console.log(err.message));
   };
   const getvideoDetails = () => {
+    console.log('axios called getvideodetails')
     axios
       .get("/videos", {
         params: {
           part: "contentDetails,statistics",
-          id: id?.videoId || id,
+          id: id,
         },
       })
       .then((res) => {
@@ -101,12 +101,12 @@ export const VideoContainer = ({ video }) => {
         setDuration(items[0].contentDetails.duration);
       });
   };
-  useEffect(getChannelIcon);
-  useEffect(getvideoDetails);
+  useEffect(getChannelIcon,[id]);
+  useEffect(getvideoDetails,[id]);
 
   return (
     <div className="video__container" >
-      <div className="video__thumbnail cursor-pointer" onClick={()=>history.push(`/watch/${id?.videoId || id}`)}>
+      <div className="video__thumbnail cursor-pointer" onClick={()=>history.push(`/watch/${id}`)}>
         <img src={medium.url} alt="thumbnail" />
         <span className="video__duration">{_duration}</span>
       </div>
@@ -116,8 +116,8 @@ export const VideoContainer = ({ video }) => {
               onClick={()=>window.open(`/channel/${channelId}`)}/>
         </div>
         <div className="video__content">
-          <h5 className="video__title cursor-pointer" onClick={()=>history.push(`/watch/${id?.videoId || id}`)}>{title}</h5>
-          <a href={`/watch/${id?.videoId || id}`} className="channel__name">{channelTitle}</a>
+          <h5 className="video__title cursor-pointer" onClick={()=>history.push(`/watch/${id}`)}>{title}</h5>
+          <a href={`/channel/${id}`} className="channel__name">{channelTitle}</a>
           <p className="views__time">
             {numeral(views).format("0.a")} views &nbsp;|&nbsp;{" "}
             {moment(publishedAt).fromNow()}

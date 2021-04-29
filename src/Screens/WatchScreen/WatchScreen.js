@@ -7,7 +7,7 @@ import { getChannelDetails, getRelVideos, getVideoComments, getWatchVideo } from
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import numeral from "numeral";
-import { isSubscribedFn, Subscribe } from "../../UtilFunctions";
+import { isSubscribedFn, Subscribe, Unsubscribe } from "../../UtilFunctions";
 import InfiniteCustomScroll from "../../components/InfiniteScroll/InfiniteScroll";
 import { useHistory } from "react-router";
 
@@ -27,7 +27,7 @@ const WatchScreen = ({ match }) => {
   const videoCommentsObj = useSelector(state=>state.watch.videoComments);
   const rel_videos = useSelector(state=>state.watch.rel_videos.body)
   const rel_videosObj = useSelector(state=>state.watch.rel_videos)
-
+  const subscriptionId =useSelector(state=>state.watch.subscriptionId);
 
   console.log(present_video);
   let title,
@@ -56,9 +56,7 @@ const WatchScreen = ({ match }) => {
 
   useEffect(() => {
     if (channelId) {
-      isSubscribedFn(channelId).then((res) => {
-        if (res.data.items.length) setIsSubscribed(true);
-      });
+      isSubscribedFn(channelId)
       dispatch(getChannelDetails(channelId));
     }
   }, [channelId,dispatch]);
@@ -79,18 +77,17 @@ const WatchScreen = ({ match }) => {
 
   // ----Handlers----
   const SubscribeHandler = () => {
-    if (!isSubscribed) {
-      Subscribe().then((res) => {
-        isSubscribedFn(channelId).then((res) => {
-          // console.log(res);
-          if (res.data.items.length) setIsSubscribed(true);
-        });
-      });
+    if (!subscriptionId) {
+      Subscribe(channelId)
+      .catch((err) =>{
+        console.log(err, 'error in subscribing channel');
+      })
     } else {
+        Unsubscribe()
     }
   };
 
-  let fetchingDelay=1000
+  let fetchingDelay=2000
   const fetchComments = ()=>{
     console.log('in fetch comments')
     setTimeout(()=>{
@@ -106,7 +103,6 @@ const WatchScreen = ({ match }) => {
   }
   return (
     <>
-      <Header />
       <div className="watch__container">
         <div className="big__video">
           <iframe
@@ -143,11 +139,11 @@ const WatchScreen = ({ match }) => {
             <p className='subCount'>{numeral(channelDetails?.body?.statistics.subscriberCount).format(0,0)}</p>
             <button
               className={`subscription ${
-                isSubscribed ? "subscribed" : "not__subscribed"
+                subscriptionId ? "subscribed" : "not__subscribed"
               }`}
               onClick={SubscribeHandler}
             >
-              Subscribe{isSubscribed ? "d" : ""}
+              Subscribe{subscriptionId ? "d" : ""}
             </button>
           </div>
           <hr />
@@ -184,7 +180,7 @@ const WatchScreen = ({ match }) => {
         </div>
         <div className="related__videos">
           {rel_videos?.length&&
-          <InfiniteCustomScroll  length={rel_videos?.length} fetchData={()=>fetchRelVideos()} hasMore={rel_videosObj.nextPageToken?true:false} >
+          <InfiniteCustomScroll  length={rel_videos?.length} fetchData={()=>fetchRelVideos()} hasMore={rel_videos.length<20?(rel_videosObj.nextPageToken?true:false):false} >
             {rel_videos?.map((video,id) => {
               // console.log(video)
               return <RelatedVideo {...video} id1={id} />;
@@ -203,8 +199,10 @@ const RelatedVideo = (props) => {
   // console.log(props)
   let { id:{videoId},id1 }=props;
   const [snippet,setSnippet] = useState({});
-  let {publishedAt,title,thumbnails,channelTitle}=snippet;
+  let {publishedAt,title,thumbnails,channelTitle,channelId}=snippet;
   const history = useHistory();
+
+
   useEffect(()=>{
     const getVideoSnippet = async ()=>{
       try{
@@ -227,11 +225,11 @@ const RelatedVideo = (props) => {
 
   if(publishedAt)
   return (
-    <div className='related__video cursor-pointer' onClick={()=>history.push(`/watch/${videoId}`)} >
-      <img src={thumbnails.medium.url} alt="rel_video"/>
+    <div className='related__video' onClick={()=>history.push(`/watch/${videoId}`)} >
+      <img src={thumbnails.medium.url} alt="rel_video" className=' cursor-pointer'/>
       <div>
-        <h6 className='line__clamp2'>{title}</h6>
-        <p className="color-gray cursor-pointer"> {channelTitle}</p>
+        <h6 className='line__clamp2  cursor-pointer'>{title}</h6>
+        <p className="color-gray cursor-pointer"><a href={`/channel/${channelId}`} className="channel__name">{channelTitle}</a></p>
         <p className="color-gray">{moment(publishedAt).fromNow()}</p>
       </div>
     </div>

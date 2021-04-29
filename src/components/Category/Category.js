@@ -11,31 +11,12 @@ const tags = [
   "React",
   "Redux",
   "Buttabomma",
+  "Spiderman",
   "Telugu Music",
   "firebase",
   "javascripy",
   "cricket",
   "Army",
-  "React",
-  "Redux",
-  "Buttabomma",
-  "Telugu Music",
-  "React",
-  "Redux",
-  "Buttabomma",
-  "Telugu Music",
-  "Buttabomma",
-  "Telugu Music",
-  "React",
-  "Redux",
-  "Buttabomma",
-  "Telugu Music",
-  "Buttabomma",
-  "Telugu Music",
-  "React",
-  "Redux",
-  "Buttabomma",
-  "Telugu Music",
 ];
 
 const Tag = ({ content }) => {
@@ -46,15 +27,15 @@ const Tag = ({ content }) => {
     else dispatch(getCategoryVideos(tag));
   };
   return (
-    <div className="tag" onClick={() => clickHandler(content)}>
+    <p className="tag" onClick={() => clickHandler(content)}>
       {content}
-    </div>
+    </p>
   );
 };
 
 const Category = () => {
   return (
-    <div className="category__slider">
+    <div className="category__slider mt-2">
       {tags.map((tag,id) => (
         <Tag className="tag" content={tag} key={id}></Tag>
       ))}

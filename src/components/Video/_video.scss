@@ -68,7 +68,12 @@
   margin: 0px;
   line-height: 1;
   cursor: pointer;
-  border-bottom: 1px solid transparent;
+  
   width: fit-content;
-  color:inherit !important;
+  color:rgb(148, 148, 148);
+}
+
+.channel__name:hover{
+  color:rgb(211, 211, 211);
+  text-decoration: none;
 }

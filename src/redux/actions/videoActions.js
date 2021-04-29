@@ -11,7 +11,7 @@ export const getHomeVideos = () => (dispatch, getState) => {
         part: "snippet,contentDetails,statistics",
         chart: "mostPopular",
         regionCode: "IN",
-        maxResults: 5,
+        maxResults: 8,
         pageToken: getState().homeVideos.category==='All'?getState().homeVideos.nextPageToken:"",
       },
     })
@@ -45,7 +45,7 @@ export const getCategoryVideos = (keyword) => (dispatch, getState) => {
       params: {
         part: "snippet",
         type: "video",
-        maxResults: 50,
+        maxResults: 8,
         q: keyword,
         pageToken: getState().homeVideos.category===keyword?getState().homeVideos.nextPageToken:'',
       },

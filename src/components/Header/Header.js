@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import './_header.scss';
 import {IoNotificationsSharp} from 'react-icons/io5'
 import {MdApps,BsSearch,FaVideo,GiHamburgerMenu} from 'react-icons/all';
@@ -7,16 +7,20 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions/authActions';
 import { useHistory } from 'react-router';
 
-const Header = ({toggleHandler}) => {
+const Header = ({toggleSidebarHandler}) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const [searchVal,setSearchVal]=useState('');
     const logoutHandler = ()=>{
         dispatch(logout());
     }
-    
+    const searchSubmitHandler = ()=>{
+        // console.log(searchRef.current.value)
+        history.push(`/search/${searchVal}`)
+    }
     return (
-        <nav className="navbar navbar-expand">
-            <div className='mr-3 text-large' style={{cursor:'pointer'}} onClick={toggleHandler} ><GiHamburgerMenu/></div>
+        <nav className="navbar navbar-expand btm-line">
+            <div className='mr-3 text-large' style={{cursor:'pointer'}} onClick={toggleSidebarHandler} ><GiHamburgerMenu/></div>
             <a className="navbar-brand" onClick={()=>{history.push('/')}}>
                 <img src="https://www.iconpacks.net/icons/2/free-youtube-logo-icon-2431-thumb.png" alt='home' width='30px' />
                 <p className='home__btn'>YOUTUBE</p>
@@ -24,8 +28,8 @@ const Header = ({toggleHandler}) => {
             
             <div className='search__bar'>
                 <form className="form-inline my-2 my-lg-0">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                    <div><BsSearch className=' vertical-align-middle' /></div>
+                    <input  className="form-control mr-sm-2" type="search" placeholder="Search" value={searchVal} onChange={(e)=>{setSearchVal(e.target.value)}} aria-label="Search" />
+                    <submit onClick={searchSubmitHandler}><BsSearch className=' vertical-align-middle' /></submit>
                 </form>
             </div>
             <ul className="navbar-nav ml-auto align-items-center">

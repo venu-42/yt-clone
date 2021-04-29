@@ -13,12 +13,11 @@ const LikedVideos = () => {
     },[dispatch])
     return (
         <>
-        <Header />
         <div className='main-body'>
         {likedVideos.body&&
             <InfiniteCustomScroll length={likedVideos.body?.length} hasMore={likedVideos.nextPageToken?true:false} fetchData={()=>{dispatch(getLikedvieos())}}>
                 {likedVideos.body.map(video=>(
-                    <VideoContainer video={video} />
+                    <VideoContainer video={video} key={video.id} id={video.id} />
                 ))}
             </InfiniteCustomScroll>
         }

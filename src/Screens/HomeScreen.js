@@ -8,13 +8,9 @@ import Category from '../components/Category/Category'
 const HomeScreen = ({showSidebar,toggleSidebarHandler}) => {
   return (
     <>
-      <Header toggleHandler={toggleSidebarHandler} />
-      <div className="main__body">
-        {showSidebar && <Sidebar toggleHandler={toggleSidebarHandler} />}
-        <div>
-          <Category />
-          <Videos />
-        </div>
+      <div>
+        <Category />
+        <Videos />
       </div>
     </>
   );

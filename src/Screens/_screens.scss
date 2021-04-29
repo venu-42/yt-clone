@@ -26,3 +26,37 @@
         font-size: 20px;
     }
 }
+
+.search{
+    display: flex;;
+    padding: 5px 20px;
+    justify-content: space-around;
+    align-items: center;
+    &__left{
+        width:27%;
+        justify-content: center;
+    }
+    &__right{
+        width:68%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        gap:5px
+    }
+}
+.search__description{
+    @include line-clamp(3);
+}
+
+.channel__medium__img{
+    display: block;
+    width:150px;
+    border-radius: 50%;;
+    margin:auto
+}
+
+.video__medium__img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}

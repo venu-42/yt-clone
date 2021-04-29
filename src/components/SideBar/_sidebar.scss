@@ -1,0 +1,45 @@
+@import '../../index';
+
+.sidebar{
+    position: sticky;
+    left:0;
+    top:30px;
+}
+
+.sidebar__container{
+    min-width:200px;
+    animation: displaySlow .4s;
+}
+
+.sidebar .nav-item{
+    text-align: center;
+    padding: 10px;
+    margin:10px 0;
+    color:rgb(173, 173, 173);
+    background-color: $dark-secondary;
+    & *{
+        background-color: $dark-secondary;
+        text-decoration: none;
+    }
+    & svg{
+        margin-top: -4px;
+    }
+}
+.sidebar .nav-item:hover{
+    color:white;
+    background-color: #2a2a2a;
+    & *{
+        background-color:#2a2a2a;
+        text-decoration: none;
+        color:white
+    }
+}
+
+@keyframes displaySlow {
+    0%{
+        width:0
+    }
+    100%{
+
+    }
+}
