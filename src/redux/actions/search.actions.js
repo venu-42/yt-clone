@@ -5,6 +5,7 @@ export const search = (keyword) => async (dispatch, getState) => {
   dispatch({
     type: SEARCH_LOADING,
   });
+  await setTimeout(() => {},2000)
   const keywordChanged = getState().search.keyword===keyword
   try {
     const res = await axios.get("/search", {

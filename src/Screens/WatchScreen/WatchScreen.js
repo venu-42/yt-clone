@@ -10,6 +10,7 @@ import numeral from "numeral";
 import { isSubscribedFn, Subscribe, Unsubscribe } from "../../UtilFunctions";
 import InfiniteCustomScroll from "../../components/InfiniteScroll/InfiniteScroll";
 import { useHistory } from "react-router";
+import {Helmet} from 'react-helmet'
 
 const WatchScreen = ({ match }) => {
   const {
@@ -104,14 +105,18 @@ const WatchScreen = ({ match }) => {
   return (
     <>
       <div className="watch__container">
+        <Helmet>
+          <title>{title}</title>
+          <meta name="description" content={description} />
+        </Helmet>
         <div className="big__video">
           <iframe
             width="100%"
             height="506"
-            src={`https://www.youtube.com/embed/${videoId}`}
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
             title="YouTube video player"
             frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen;"
             allowfullscreen
           ></iframe>
           <div className="title">{title}</div>
@@ -122,8 +127,8 @@ const WatchScreen = ({ match }) => {
             </p>
             <div className="right__part">
               <BiLike />
-              &nbsp;{likeCount}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <BiDislike /> {dislikeCount}&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;{numeral(likeCount).format('0.0a')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <BiDislike /> {numeral(dislikeCount).format('0.0a')}&nbsp;&nbsp;&nbsp;&nbsp;
               <RiShareForwardLine />
             </div>
           </div>
@@ -180,7 +185,7 @@ const WatchScreen = ({ match }) => {
         </div>
         <div className="related__videos">
           {rel_videos?.length&&
-          <InfiniteCustomScroll  length={rel_videos?.length} fetchData={()=>fetchRelVideos()} hasMore={rel_videos.length<20?(rel_videosObj.nextPageToken?true:false):false} >
+          <InfiniteCustomScroll  length={rel_videos?.length} fetchData={()=>fetchRelVideos()} endMessage={'Thanks for coming. Youtube API allows limited calls so please come back later!!'} hasMore={rel_videos.length<20?(rel_videosObj.nextPageToken?true:false):false} >
             {rel_videos?.map((video,id) => {
               // console.log(video)
               return <RelatedVideo {...video} id1={id} />;

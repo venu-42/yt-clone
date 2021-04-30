@@ -14,13 +14,20 @@ import axios from "../../axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import InfiniteCustomScroll from "../InfiniteScroll/InfiniteScroll";
 import { useHistory } from "react-router";
+import { Skeleton } from "@material-ui/lab";
 
 const Videos = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.homeVideos.category);
   const videos = useSelector((state) => state.homeVideos.videos);
+
   useEffect(() => {
-    dispatch(getHomeVideos());
+    if(!(videos.length)){
+      setTimeout(() =>{
+        dispatch(getHomeVideos());
+      },[2000])
+    }
+    
   }, [dispatch]);
 
   const fetchData = () => {
@@ -31,17 +38,27 @@ const Videos = () => {
     } else {
       dispatch(getCategoryVideos(category));
     }
-    }, 1000);
+    }, 2000);
     
   };
-
+  const dummy=['','','','','','','',''];
+  const loader=()=>(<><VideoContainerSkeleton/><VideoContainerSkeleton/><VideoContainerSkeleton/><VideoContainerSkeleton/></>)
   return (
     <div className="vdeo__section">
-      <InfiniteCustomScroll length={videos.length} fetchData={fetchData} hasMore={videos.length<30}>
+      {!(videos?.length)?
+        <div className="d-flex flex-wrap justify-content-around mt-3" style={{rowGap:'20px'}}>
+          {
+            dummy.map(data=>(
+              <VideoContainerSkeleton />
+            ))
+          }
+      </div>:
+      <InfiniteCustomScroll length={videos.length} fetchData={fetchData} hasMore={videos.length<30} endMessage={'Thanks for coming. Youtube API allows limited calls so please come back later!!'} loader={loader}>
         {videos?.map((video) => {
           return <VideoContainer video={video} id={video.id?.videoId||video.id} key={video.id?.videoId||video.id} />;
-        })}
-      </InfiniteCustomScroll>
+        })
+      }
+      </InfiniteCustomScroll>}
     </div>
   );
 };
@@ -127,3 +144,15 @@ export const VideoContainer = ({ video,id }) => {
     </div>
   );
 };
+
+export const VideoContainerSkeleton = ()=>{
+  return(
+    <div style={{width:'23.7%'}}>
+      <Skeleton animation="wave" variant="rect" width={'100%'} height={200} />
+      <div style={{display:'flex',marginTop:'10px',gap:'20px'}}>
+      <Skeleton animation="wave" variant="circle" width={50} height={50} />
+      <Skeleton animation="wave" variant="rect" width={'80%'} height={50} />
+      </div>
+    </div>
+  )
+}

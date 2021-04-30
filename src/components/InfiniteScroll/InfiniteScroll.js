@@ -2,9 +2,7 @@ import { CircularProgress } from "@material-ui/core";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const InfiniteCustomScroll = ({children,length,fetchData,loading,hasMore,for1}) => {
-  if(for1==='comments')
-  console.log(hasMore,'for',for1);
+const InfiniteCustomScroll = ({children,length,fetchData,loading,hasMore,loader:Loader,endMessage}) => {
   return (
     <>
       <InfiniteScroll
@@ -18,13 +16,13 @@ const InfiniteCustomScroll = ({children,length,fetchData,loading,hasMore,for1}) 
           //   <span className="sr-only">Loading...</span>
           // </div>
           // <h6>Loading...</h6>
-          ((loading===null||loading===undefined)||loading===true)?
-          <CircularProgress />:<></>
+          Loader?<Loader />:((loading===null||loading===undefined)||loading===true)?
+          <CircularProgress />:(<></>)
         }
         endMessage={
           <>
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
+            <p style={{ textAlign: "center",display:'block',width:'100%' }}>
+              <b>{endMessage?endMessage:'Yay! You have seen it all'}</b>
             </p>
           </>
         }

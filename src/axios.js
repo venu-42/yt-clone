@@ -1,14 +1,11 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
-const ytCloneExceed='AIzaSyBWoq3PTTUUdFjBqYbr7WDFeYHDe5Ajqm4'
-const ytClone='AIzaSyAyBC0U1zPxljyMpxw9QG0C09OuddjxKZs';
-const netflixClone='AIzaSyAmsAmcTlwv0LuAQPlUi2Or-TdpbT6fN_k'
-
-
+const {REACT_APP_ytClone_API_KEY,REACT_APP_ytCloneExceed_API_KEY,REACT_APP_netflix_API_KEY}=process.env;
+// console.log(REACT_APP_netflix_API_KEY,process.env)
 const instance = axios.create({
     baseURL:'https://youtube.googleapis.com/youtube/v3/',
     params:{
-        key:ytClone
+        key:REACT_APP_ytClone_API_KEY
     }
 })
 
@@ -20,7 +17,7 @@ const URLandPARAMS = (req)=>(
 )
 
 instance.interceptors.request.use(request => {
-    console.log('Starting Request', JSON.stringify(URLandPARAMS(request), null, 2))
+    // console.log('Starting Request', JSON.stringify(URLandPARAMS(request), null, 2))
     return request
   })
 

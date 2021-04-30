@@ -8,15 +8,27 @@ import "./_category.scss";
 
 const tags = [
   "All",
-  "React",
+  "C++",
   "Redux",
   "Buttabomma",
-  "Spiderman",
+  "Spiderman post",
   "Telugu Music",
   "firebase",
-  "javascripy",
+  "javascript",
   "cricket",
-  "Army",
+  "History",
+  "Allu Arjun",
+  "Website",
+  "Confidence",
+  "Music",
+  "firebase",
+  "javascript",
+  "cricket",
+  "History",
+  "Allu Arjun",
+  "Website",
+  "Confidence",
+  "Music",
 ];
 
 const Tag = ({ content }) => {

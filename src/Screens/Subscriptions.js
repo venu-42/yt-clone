@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import InfiniteCustomScroll from '../components/InfiniteScroll/InfiniteScroll';
 import { getSubscriptions } from '../redux/actions/subscriptions.actions';
 import { ChannelSearch } from './SearchScreen/SearchScreen';
+import {Helmet} from 'react-helmet'
 
 const Subscriptions = () => {
     const dispatch = useDispatch();
@@ -12,6 +13,11 @@ const Subscriptions = () => {
     },[])
     return (
         <>
+            <div>
+            <Helmet>
+                <title>{"Subscriptions"}</title>
+            </Helmet>
+            </div>
             {subscriptions.body?.length&&
                 <InfiniteCustomScroll length={subscriptions.body?.length} hasMore={false} >
                     {subscriptions.body.map((subsc)=>(

@@ -8,11 +8,9 @@ const authReducer=(state=initailState,action)=>{
     const {type,payload} = action;
     switch(type){
         case LOGIN:
-            let newState={...state};
-            let user={...newState.user};
-            user=payload;
-            newState.user=user;
-            return newState;
+            return{
+                user:payload
+            }
         case LOGOUT:
             return {
                 user:null

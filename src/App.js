@@ -44,9 +44,12 @@ const App = () => {
               </Route>
               <Route path="/watch/:videoId" component={WatchScreen} />
               <Route path="/likedVideos" component={LikedVideos} />
-              {/* <Route path="/channel/:channelId" component={ChannelScreen} /> */}
               <Route path="/search/:keyword" component={SearchScreen} />
               <Route path="/subscriptins" component={Subscriptions} />
+              {/* <Route path="/channel/:channelId" component={ChannelScreen} /> */}
+              <Route path="/">
+                <h3 className="text-center my-5">Thanks for coming! this page has not been Created yet!</h3>
+              </Route>
             </Switch>
           </div>
         </div>

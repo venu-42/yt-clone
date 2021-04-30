@@ -8,17 +8,18 @@ export const login=()=> dispatch =>{
     googleProvider.addScope('https://www.googleapis.com/auth/youtube.force-ssl')
     auth.signInWithPopup(googleProvider)
     .then(res=>{
-        console.log(res);
+        console.log(res,'login res');
         const accessToken=res.credential.accessToken;
         const name=res.additionalUserInfo.profile.name;
         dispatch({
             type:actionTypes.LOGIN,
             payload:{
                 name,
-                accessToken
+                accessToken,
+                photoURL:res.user.photoURL
             }
         })
-        localStorage.setItem('ytc-user',JSON.stringify({name,accessToken}));
+        localStorage.setItem('ytc-user',JSON.stringify({name,accessToken,photoURL:res.user.photoURL}));
     })
     .catch(err=>console.log(err.message));
 }
