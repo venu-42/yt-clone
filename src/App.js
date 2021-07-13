@@ -13,6 +13,7 @@ import LikedVideos from "./Screens/LikedVideos";
 import ChannelScreen from "./Screens/ChannelScreen/ChannelScreen";
 import SearchScreen from "./Screens/SearchScreen/SearchScreen";
 import Subscriptions from "./Screens/Subscriptions";
+import { Helmet } from "react-helmet";
 
 const App = () => {
   const [showSidebar, setShowSideBar] = useState(false);
@@ -30,6 +31,9 @@ const App = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{"ZedTube"}</title>
+      </Helmet>
       <BrowserRouter>
         <Header toggleSidebarHandler={toggleSidebarHandler} />
         <div className="main__body">

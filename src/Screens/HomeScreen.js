@@ -9,7 +9,7 @@ const HomeScreen = ({showSidebar,toggleSidebarHandler}) => {
   return (
     <>
         <Helmet>
-          <title>{"Youtube"}</title>
+          <title>{"ZedTube"}</title>
         </Helmet>
         <Category />
         <Videos />

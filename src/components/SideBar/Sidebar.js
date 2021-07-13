@@ -34,8 +34,13 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link className="nav-item__link" to='/'>
+                            <Link className="nav-item__link" to='/playlists'>
                             <RiPlayList2Fill /> <span>Your Playlists</span>
+                            </Link>
+                        </li>
+                        <li className='nav-item'>
+                            <Link className="nav-item__link" to='/watchLater'>
+                            <RiPlayList2Fill /> <span>Watch Later</span>
                             </Link>
                         </li>
                     </ul>
