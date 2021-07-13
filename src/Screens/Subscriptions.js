@@ -20,8 +20,8 @@ const Subscriptions = () => {
             </div>
             {subscriptions.body?.length&&
                 <InfiniteCustomScroll length={subscriptions.body?.length} hasMore={false} >
-                    {subscriptions.body.map((subsc)=>(
-                        <ChannelSearch item={subsc} type="subscription" key={subsc.snippet.resourceId.channelId} />
+                    {subscriptions.body.map((subsc,id)=>(
+                        <ChannelSearch item={subsc} type="subscription" key={id} />
                     ))}
                 </InfiniteCustomScroll> 
             }

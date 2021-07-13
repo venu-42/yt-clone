@@ -34,7 +34,7 @@ const App = () => {
         <Header toggleSidebarHandler={toggleSidebarHandler} />
         <div className="main__body">
           {showSidebar && <Sidebar />}
-          <div style={{backgroundColor:'#111',width:showSidebar?'86.4%':'100%'}}>
+          <div style={{backgroundColor:'#111',width:showSidebar?'85%':'100%'}}>
             <Switch>
               <Route path="/" exact>
                 <HomeScreen
@@ -45,7 +45,7 @@ const App = () => {
               <Route path="/watch/:videoId" component={WatchScreen} />
               <Route path="/likedVideos" component={LikedVideos} />
               <Route path="/search/:keyword" component={SearchScreen} />
-              <Route path="/subscriptins" component={Subscriptions} />
+              <Route path="/subscriptions" component={Subscriptions} />
               {/* <Route path="/channel/:channelId" component={ChannelScreen} /> */}
               <Route path="/">
                 <h3 className="text-center my-5">Thanks for coming! this page has not been Created yet!</h3>

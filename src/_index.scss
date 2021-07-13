@@ -32,3 +32,9 @@ hr{
   border-color:rgba(255, 255, 255, 0.24);
   height: 5px;
 }
+
+@media screen and (max-width:1024px){
+  *{
+    font-size: 14px;
+  }  
+}

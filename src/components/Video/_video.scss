@@ -12,6 +12,12 @@
 .video__container {
   width: 23.7%;
 //  margin:10px; 
+  @media (min-width:500px) and (max-width:768px){
+    width:32.1%;
+  }
+  @media (max-width:499px){
+    width:90%;
+  }
 }
 .video__thumbnail {
   position: relative;
@@ -26,6 +32,7 @@
     bottom: 1%;
     background-color: $dark-secondary;
     color: white;
+    padding: 0 4px;
     border-radius: 2px;
     margin: 4px;
   }
@@ -40,7 +47,7 @@
           font-size: 16px;
           font-weight: 400;
           @include line-clamp(2);
-          word-wrap: break-word;
+          word-break:break-all;
       }
       &>.views__time{
           margin:0;
@@ -61,6 +68,12 @@
   // height: 80vh;
   height: unset !important;
   overflow: unset !important;
+  @media (max-width:499px){
+    padding-left: 15px;
+    padding-right: 15px;
+    justify-content: center;
+    row-gap: 40px;
+  }
 }
 
 .channel__name{
@@ -68,7 +81,7 @@
   margin: 0px;
   line-height: 1;
   cursor: pointer;
-  
+  @include line-clamp(1);
   width: fit-content;
   color:rgb(148, 148, 148);
 }
@@ -76,4 +89,14 @@
 .channel__name:hover{
   color:rgb(211, 211, 211);
   text-decoration: none;
+}
+
+.videocontainerskeleton{
+  width: 23.7%;
+  @media (min-width:500px) and (max-width:768px) {
+    width:32.1%;
+  }
+  @media (max-width:499px) {
+    width:90%;
+  }
 }

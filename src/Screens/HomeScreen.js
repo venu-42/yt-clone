@@ -8,13 +8,11 @@ import { Helmet } from "react-helmet";
 const HomeScreen = ({showSidebar,toggleSidebarHandler}) => {
   return (
     <>
-      <div>
         <Helmet>
           <title>{"Youtube"}</title>
         </Helmet>
         <Category />
         <Videos />
-      </div>
     </>
   );
 };

@@ -83,7 +83,7 @@ export const VideoContainer = ({ video,id }) => {
   const seconds = moment.duration(duration).asSeconds();
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
   const getChannelIcon = () => {
-    console.log('axios called getchannelicon')
+    // console.log('axios called getchannelicon')
     axios
       .get("/channels", {
         params: {
@@ -101,7 +101,7 @@ export const VideoContainer = ({ video,id }) => {
       .catch((err) => console.log(err.message));
   };
   const getvideoDetails = () => {
-    console.log('axios called getvideodetails')
+    // console.log('axios called getvideodetails')
     axios
       .get("/videos", {
         params: {
@@ -147,7 +147,7 @@ export const VideoContainer = ({ video,id }) => {
 
 export const VideoContainerSkeleton = ()=>{
   return(
-    <div style={{width:'23.7%'}}>
+    <div className="videocontainerskeleton">
       <Skeleton animation="wave" variant="rect" width={'100%'} height={200} />
       <div style={{display:'flex',marginTop:'10px',gap:'20px'}}>
       <Skeleton animation="wave" variant="circle" width={50} height={50} />

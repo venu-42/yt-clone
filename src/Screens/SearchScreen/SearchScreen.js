@@ -268,7 +268,7 @@ export const ChannelSearch = ({ item, type }) => {
         },
       })
       .then((res) => {
-        console.log(res.data.items[0].statistics);
+        // console.log(res.data.items[0].statistics);
         setSubscriberCount(res.data.items[0].statistics.subscriberCount);
         setNoOfVideos(res.data.items[0].statistics.videoCount);
       })

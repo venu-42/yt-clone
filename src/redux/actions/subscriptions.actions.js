@@ -18,6 +18,7 @@ export const getSubscriptions = () => async (dispatch, getState) => {
       },
     });
     let items= [...getState().subscriptions.body,...res.data.items];
+    // console.log(items);
     dispatch({
         type: SUBSCRIPTION_SUCCESS,
         payload:{

@@ -43,9 +43,32 @@
         justify-content: space-around;
         gap:5px
     }
+    @media (max-width:768px){
+        &__left{
+            width:50%;
+        }
+        &__right{
+            width:40%;
+        }
+        
+    }
+    @media (max-width:499px){
+        flex-direction: column;
+        &__left{
+            width:100%;
+        }
+        &__right{
+            margin: 15px 0 0 0;
+            width:100%;
+            .search__title{
+                font-size: 23px;
+            }
+        }
+        
+    }
 }
 .search__description{
-    @include line-clamp(3);
+    @include line-clamp(2);
 }
 
 .channel__medium__img{

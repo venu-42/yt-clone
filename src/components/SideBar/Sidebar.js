@@ -14,23 +14,28 @@ const Sidebar = () => {
                 <div className="navbar p-0">
                     <ul className='nav flex-column w-100'>
                         <li className='nav-item'>
-                            <Link to='/'>
-                                <AiFillHome />&nbsp;&nbsp; Home
+                            <Link className="nav-item__link" to='/'>
+                                <AiFillHome /> <span>Home</span>
+                            </Link>
+                        </li>
+                        {/* <li className='nav-item'>
+                            <Link className="nav-item__link" to='/likedvideos'>
+                            <AiFillLike /> Liked Videos
+                            </Link>
+                        </li> */}
+                        <li className='nav-item'>
+                            <Link className="nav-item__link" to='/likedvideos'>
+                            <AiFillLike /> <span>Liked Videos</span>
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/likedvideos'>
-                            <AiFillLike />&nbsp;&nbsp; Liked Videos
+                            <Link className="nav-item__link" to='/subscriptions'>
+                            <MdSubscriptions /> <span>Subscriptions</span>
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/subscriptins'>
-                            <MdSubscriptions />&nbsp;&nbsp; Subscriptions
-                            </Link>
-                        </li>
-                        <li className='nav-item'>
-                            <Link to='/'>
-                            <RiPlayList2Fill />&nbsp;&nbsp; Your Playlists
+                            <Link className="nav-item__link" to='/'>
+                            <RiPlayList2Fill /> <span>Your Playlists</span>
                             </Link>
                         </li>
                     </ul>

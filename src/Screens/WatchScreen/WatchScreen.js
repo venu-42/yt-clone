@@ -233,7 +233,7 @@ const RelatedVideo = (props) => {
     <div className='related__video' onClick={()=>history.push(`/watch/${videoId}`)} >
       <img src={thumbnails.medium.url} alt="rel_video" className=' cursor-pointer'/>
       <div>
-        <h6 className='line__clamp2  cursor-pointer'>{title}</h6>
+        <h6 className='line__clamp2 cursor-pointer' style={{wordBreak:'break-all'}}>{title}</h6>
         <p className="color-gray cursor-pointer"><a href={`/channel/${channelId}`} className="channel__name">{channelTitle}</a></p>
         <p className="color-gray">{moment(publishedAt).fromNow()}</p>
       </div>
@@ -248,7 +248,7 @@ const VideoComment = ({imgURL,title,publishedAt,description,channelId})=>{
     <div className="comment__box">
       <img src={imgURL} className='channel__img' alt=""/>
       <div className="title__desc">
-        <h6 className='comment__title'><a href={`/channel/${channelId}`} className="channel__name">{title}</a> &nbsp; <p className="small__gray d-inline-block">{moment(publishedAt).fromNow()}</p> </h6>
+        <h6 className='comment__title'><a href={`/channel/${channelId}`} className="channel__name">{title}</a>  <p className="small__gray d-inline-block">{moment(publishedAt).fromNow()}</p> </h6>
         <p className='comment__description' dangerouslySetInnerHTML={{__html: description}} ></p>
       </div>
     </div>

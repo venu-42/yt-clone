@@ -6,6 +6,8 @@ import { MdApps, BsSearch, FaVideo, GiHamburgerMenu } from "react-icons/all";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/authActions";
 import { useHistory } from "react-router";
+import LogoLaptop from '../../images/image1.png'
+import LogoMobile from '../../images/zedtube-logo.png';
 
 const Header = ({ toggleSidebarHandler }) => {
   const dispatch = useDispatch();
@@ -34,17 +36,22 @@ const Header = ({ toggleSidebarHandler }) => {
         <GiHamburgerMenu />
       </div>
       <a
-        className="navbar-brand cursor-pointer"
+        className="navbar-brand cursor-pointer" style={{marginLeft:10}}
         onClick={() => {
           history.push("/");
         }}
       >
-        <img
-          src="https://www.iconpacks.net/icons/2/free-youtube-logo-icon-2431-thumb.png"
+        <img className="laptop-logo"
+          src={LogoLaptop}
           alt="home"
-          width="30px"
+          width="100px"
         />
-        <p className="home__btn">YOUTUBE</p>
+        <img className="mobile-logo"
+          src={LogoMobile}
+          alt="home"
+          width="35px"
+        />
+        {/* <p className="home__btn">YOUTUBE</p> */}
       </a>
 
       <div className="search__bar">
@@ -84,13 +91,6 @@ const Header = ({ toggleSidebarHandler }) => {
             className="dropdown-menu dropdown-menu-right"
             aria-labelledby="navbarDropdown"
           >
-            <a className="dropdown-item cursor-pointer">
-              Profile
-            </a>
-            <a className="dropdown-item cursor-pointer">
-              Settings
-            </a>
-            <div className="dropdown-divider"></div>
             <a className="dropdown-item cursor-pointer" onClick={logoutHandler}>
               Logout
             </a>
